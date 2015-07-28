@@ -30,30 +30,30 @@ $(function() {
         });
 
 
-         /* Test that loops through each feed
-          * in the allFeeds object and ensures it has a URL defined
-          * and that the URL is not empty.
-          */
-         it('has URLs defined', function() {
+        /* Test that loops through each feed
+         * in the allFeeds object and ensures it has a URL defined
+         * and that the URL is not empty.
+         */
+        it('has URLs defined', function() {
             expect(allFeeds instanceof Array).toBeTruthy();
             allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
                 expect(feed.url).toMatch(/^http(s?)\:\/\//);
             });
-         });
+        });
 
 
-         /* Test that loops through each feed
-          * in the allFeeds object and ensures it has a name defined
-          * and that the name is not empty.
-          */
-         it('has names defined', function() {
+        /* Test that loops through each feed
+         * in the allFeeds object and ensures it has a name defined
+         * and that the name is not empty.
+         */
+        it('has names defined', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
                 expect(typeof feed.name).toBe('string');
                 expect(feed.name).not.toBe('');
             });
-         });
+        });
     });
 
 
@@ -68,11 +68,11 @@ $(function() {
             expect($('.menu-hidden').length).toBe(1);
         });
 
-         /* Test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+        /* Test that ensures the menu changes
+         * visibility when the menu icon is clicked. This test
+         * should have two expectations: does the menu display when
+         * clicked and does it hide when clicked again.
+         */
         it('has menu changed on click', function() {
             $('.menu-icon-link').trigger('click');
             expect($('.menu-hidden').length).toBe(0);
@@ -111,25 +111,36 @@ $(function() {
         var container = $('.feed');
 
         // Empty out all previous entries
-        beforeEach(function() {
-              container.empty();  
+        beforeEach(function(done) {
+            container.empty();  
+            loadFeed(0, function() {
+                done();
+            });
         });
 
-        it('has no content', function() {
-            expect(container.find('.entry').length).toBe(0);
+        it('has content with ID 0', function() {
+            expect(container.find('.entry').length).toBeGreaterThan(0);
+            var feedsTitle = $('.header-title').text();
+            expect(feedsTitle).toBeDefined();
+            expect(typeof feedsTitle).toBe('string');
+            expect(feedsTitle).toBe(allFeeds[0].name);
         });
 
         // Checks if after load content is different
         describe('After load', function() {
             beforeEach(function(done) {
-                loadFeed(0, function() {
+                loadFeed(1, function() {
                     done();
                 });
             });
 
-            it('changes content', function() {
+            it('has content with ID 1', function() {
                 var container = $('.feed');
                 expect(container.find('.entry').length).toBeGreaterThan(0);
+                var feedsTitle = $('.header-title').text();
+                expect(feedsTitle).toBeDefined();
+                expect(typeof feedsTitle).toBe('string');
+                expect(feedsTitle).toBe(allFeeds[1].name);
             });
         });
     });
