@@ -1,3 +1,5 @@
+'use strict';
+
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
@@ -22,6 +24,7 @@ $(function() {
          * page?
          */
         it('are defined', function() {
+            expect(allFeeds instanceof Array).toBeTruthy();
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -31,9 +34,11 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-         it('has URLs defined', function(){
-            allFeeds.forEach(function(feed){
+         it('has URLs defined', function() {
+            expect(allFeeds instanceof Array).toBeTruthy();
+            allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
+                expect(feed.url).toMatch(/^http(s?)\:\/\//);
             });
          });
 
@@ -42,9 +47,10 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('has names defined', function(){
-            allFeeds.forEach(function(feed){
+         it('has names defined', function() {
+            allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
+                expect(typeof feed.name).toBe('string');
                 expect(feed.name).not.toBe('');
             });
          });
@@ -58,7 +64,7 @@ $(function() {
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
-        it('has menu hidden by default', function(){
+        it('has menu hidden by default', function() {
             expect($('.menu-hidden').length).toBe(1);
         });
 
@@ -67,7 +73,7 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        it('has menu hidden by default', function(){
+        it('has menu hidden by default', function() {
             $('.menu-icon-link').trigger('click');
             expect($('.menu-hidden').length).toBe(0);
             $('.menu-icon-link').trigger('click');
@@ -83,15 +89,15 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test wil require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        beforeEach(function(done){
-            loadFeed(0, function(){
+        beforeEach(function(done) {
+            loadFeed(0, function() {
                 done();
             });
         });
 
-        it('loads feeds', function(){
-            var container = $('.feed')
-            expect(container.find('.entry').length).not.toBe(0);
+        it('loads feeds', function() {
+            var container = $('.feed');
+            expect(container.find('.entry').length).toBeGreaterThan(0);
         });
     });
         
@@ -102,28 +108,28 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        var container = $('.feed')
+        var container = $('.feed');
 
         // Empty out all previous entries
-        beforeEach(function(){
+        beforeEach(function() {
               container.empty();  
         });
 
-        it('has no content', function(){
+        it('has no content', function() {
             expect(container.find('.entry').length).toBe(0);
         });
 
         // Checks if after load content is different
         describe('After load', function() {
-            beforeEach(function(done){
-                loadFeed(0, function(){
+            beforeEach(function(done) {
+                loadFeed(0, function() {
                     done();
                 });
             });
 
-            it('changes content', function(){
-                var container = $('.feed')
-                expect(container.find('.entry').length).not.toBe(0);
+            it('changes content', function() {
+                var container = $('.feed');
+                expect(container.find('.entry').length).toBeGreaterThan(0);
             });
         });
     });
