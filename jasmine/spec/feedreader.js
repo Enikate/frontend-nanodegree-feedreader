@@ -12,11 +12,11 @@
  */
 $(function() {
     /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+     * a related set of tests. This suite is all about the RSS
+     * feeds definitions, the allFeeds variable in our application.
+     */
     describe('RSS Feeds', function() {
-        /* This is our first test - it tests to make sure that the
+        /* Tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
          * the rest of this project. What happens when you change
@@ -30,10 +30,10 @@ $(function() {
         });
 
 
-        /* Test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
+         /* Test that loops through each feed
+          * in the allFeeds object and ensures it has a URL defined
+          * and that the URL is not empty.
+          */
          it('has URLs defined', function() {
             expect(allFeeds instanceof Array).toBeTruthy();
             allFeeds.forEach(function(feed) {
@@ -43,10 +43,10 @@ $(function() {
          });
 
 
-        /* Test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
+         /* Test that loops through each feed
+          * in the allFeeds object and ensures it has a name defined
+          * and that the name is not empty.
+          */
          it('has names defined', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.name).toBeDefined();
@@ -73,7 +73,7 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        it('has menu hidden by default', function() {
+        it('has menu changed on click', function() {
             $('.menu-icon-link').trigger('click');
             expect($('.menu-hidden').length).toBe(0);
             $('.menu-icon-link').trigger('click');
