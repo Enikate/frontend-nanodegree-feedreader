@@ -108,39 +108,39 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        var container = $('.feed');
+        var contentFeed0, contentFeed1;
 
-        // Empty out all previous entries
+        // Load first content
         beforeEach(function(done) {
-            container.empty();  
             loadFeed(0, function() {
                 done();
             });
         });
 
+        // Check first content
         it('has content with ID 0', function() {
-            expect(container.find('.entry').length).toBeGreaterThan(0);
-            var feedsTitle = $('.header-title').text();
-            expect(feedsTitle).toBeDefined();
-            expect(typeof feedsTitle).toBe('string');
-            expect(feedsTitle).toBe(allFeeds[0].name);
+            var feed = $('.feed');
+            expect(feed).toBeDefined();
+            contentFeed0 = feed.html();
+            expect(contentFeed0).toBeDefined();
         });
 
-        // Checks if after load content is different
+        // Load second content
         describe('After load', function() {
+            
             beforeEach(function(done) {
                 loadFeed(1, function() {
                     done();
                 });
             });
 
-            it('has content with ID 1', function() {
-                var container = $('.feed');
-                expect(container.find('.entry').length).toBeGreaterThan(0);
-                var feedsTitle = $('.header-title').text();
-                expect(feedsTitle).toBeDefined();
-                expect(typeof feedsTitle).toBe('string');
-                expect(feedsTitle).toBe(allFeeds[1].name);
+            // Compare first with second
+            it('has different content after second load', function() {
+                var feed = $('.feed');
+                expect(feed).toBeDefined();
+                contentFeed1 = feed.html();
+                expect(contentFeed1).toBeDefined();
+                expect(contentFeed0).not.toBe(contentFeed1);
             });
         });
     });
